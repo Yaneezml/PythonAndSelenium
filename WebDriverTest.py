@@ -18,23 +18,37 @@ def main():
     browser.find_element_by_css_selector(policy).click()
 
     """Finds current country selected """
-    currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
-    print("This is the country selected: " + currentCountry)
-    assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
+    # currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
+    #  print("This is the country selected: " + currentCountry)
+    # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
 
     print(selectCountry(browser, "United Kingdom"))
+    currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
+    print("You have changed the country to : " + currentCountry)
+    WebDriverWait(browser, 150)
     # browser.quit()
 
 
 def selectCountry(driver, country):
-    assert (driver.find_element_by_css_selector('p.overlay-item-active').text != country), (country + "is already "
-                                                                                                  "selected!")
+    p = driver.find_element_by_css_selector('p.overlay-item-active')
+    assert (p.text != country), (country + "is already selected!")
 
     list_of_countries = []
-    cText = driver.find_elements_by_css_selector("p.overlay-item")
+    cText = driver.find_elements_by_css_selector("p[ng-click='updateRegion(countryCode)']")
     for i in cText:
         list_of_countries.append(i.text)
-    return list_of_countries
+    # return list_of_countries
+    print(list_of_countries)
+
+    assert country in list_of_countries, "This country isn't in the list!"
+
+    for c in cText:
+        if c.text in list_of_countries:
+            if c.text == country:
+                c.click()
+    test = c.text + " has been selected"
+
+    print(test)
 
 
 if __name__ == "__main__":
