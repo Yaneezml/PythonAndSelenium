@@ -1,3 +1,4 @@
+from pprint import pprint
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -37,14 +38,15 @@ def selectCountry(driver, country):
     cText = driver.find_elements_by_css_selector("p[ng-click='updateRegion(countryCode)']")
     for i in cText:
         list_of_countries.append(i.text)
-    # return list_of_countries
-    print(list_of_countries)
+    pprint("These are the country options: " + list_of_countries.__str__())
 
     assert country in list_of_countries, "This country isn't in the list!"
 
     for c in cText:
+        x = None
         if c.text in list_of_countries:
             if c.text == country:
+                x = c
                 c.click()
     test = c.text + " has been selected"
 
