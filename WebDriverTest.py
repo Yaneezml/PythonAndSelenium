@@ -5,6 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+# Runs the code
 def main():
     browser = webdriver.Chrome()
     browser.maximize_window()
@@ -19,17 +20,14 @@ def main():
     browser.find_element_by_css_selector(policy).click()
 
     """Finds current country selected """
-    # currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
-    #  print("This is the country selected: " + currentCountry)
-    # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
-
     print(selectCountry(browser, "United Kingdom"))
-    currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
-    print("You have changed the country to : " + currentCountry)
-    WebDriverWait(browser, 150)
+
+    browser.implicitly_wait(60)
     # browser.quit()
 
 
+# Method to select a country by first asserting the country isn't already selected,
+# followed by iterating through all countries to match the parameter.
 def selectCountry(driver, country):
     p = driver.find_element_by_css_selector('p.overlay-item-active')
     assert (p.text != country), (country + "is already selected!")
@@ -38,17 +36,15 @@ def selectCountry(driver, country):
     cText = driver.find_elements_by_css_selector("p[ng-click='updateRegion(countryCode)']")
     for i in cText:
         list_of_countries.append(i.text)
-    pprint("These are the country options: " + list_of_countries.__str__())
+    pprint("These are the country options: " + '\n' + list_of_countries.__str__())
 
     assert country in list_of_countries, "This country isn't in the list!"
 
     for c in cText:
-        x = None
         if c.text in list_of_countries:
             if c.text == country:
-                x = c
                 c.click()
-    driver.find_element_by_css_selector('p.overlay-item-active').text
+    return "The country {} is now selected.".format(driver.find_element_by_css_selector('p.overlay-item-active').text)
 
 
 if __name__ == "__main__":
