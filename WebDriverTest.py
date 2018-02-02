@@ -1,9 +1,11 @@
+from pprint import pprint
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+# Runs the code
 def main():
     browser = webdriver.Chrome()
     browser.maximize_window()
@@ -18,23 +20,43 @@ def main():
     browser.find_element_by_css_selector(policy).click()
 
     """Finds current country selected """
+<<<<<<< HEAD
     currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
     print("This is the country selected: " + currentCountry)
     # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
 
+=======
+>>>>>>> cc0689e7aafd0642ba4c939dbc429ccbd4d5410e
     print(selectCountry(browser, "United Kingdom"))
+
+    browser.implicitly_wait(60)
     # browser.quit()
 
 
+# Method to select a country by first asserting the country isn't already selected,
+# followed by iterating through all countries to match the parameter.
 def selectCountry(driver, country):
+<<<<<<< HEAD
     assert (driver.find_element_by_css_selector('p.overlay-item-active').text != country), (country + " is already "
                                                                                                       "selected!")
+=======
+    p = driver.find_element_by_css_selector('p.overlay-item-active')
+    assert (p.text != country), (country + "is already selected!")
+>>>>>>> cc0689e7aafd0642ba4c939dbc429ccbd4d5410e
 
     list_of_countries = []
-    cText = driver.find_elements_by_css_selector("p.overlay-item")
+    cText = driver.find_elements_by_css_selector("p[ng-click='updateRegion(countryCode)']")
     for i in cText:
         list_of_countries.append(i.text)
-    return list_of_countries
+    pprint("These are the country options: " + '\n' + list_of_countries.__str__())
+
+    assert country in list_of_countries, "This country isn't in the list!"
+
+    for c in cText:
+        if c.text in list_of_countries:
+            if c.text == country:
+                c.click()
+    return "The country {} is now selected.".format(driver.find_element_by_css_selector('p.overlay-item-active').text)
 
 
 if __name__ == "__main__":
