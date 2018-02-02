@@ -20,13 +20,10 @@ def main():
     browser.find_element_by_css_selector(policy).click()
 
     """Finds current country selected """
-<<<<<<< HEAD
     currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
     print("This is the country selected: " + currentCountry)
     # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
 
-=======
->>>>>>> cc0689e7aafd0642ba4c939dbc429ccbd4d5410e
     print(selectCountry(browser, "United Kingdom"))
 
     browser.implicitly_wait(60)
@@ -36,13 +33,12 @@ def main():
 # Method to select a country by first asserting the country isn't already selected,
 # followed by iterating through all countries to match the parameter.
 def selectCountry(driver, country):
-<<<<<<< HEAD
+
     assert (driver.find_element_by_css_selector('p.overlay-item-active').text != country), (country + " is already "
                                                                                                       "selected!")
-=======
+
     p = driver.find_element_by_css_selector('p.overlay-item-active')
     assert (p.text != country), (country + "is already selected!")
->>>>>>> cc0689e7aafd0642ba4c939dbc429ccbd4d5410e
 
     list_of_countries = []
     cText = driver.find_elements_by_css_selector("p[ng-click='updateRegion(countryCode)']")
