@@ -20,15 +20,15 @@ def main():
     """Finds current country selected """
     currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
     print("This is the country selected: " + currentCountry)
-    assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
+    # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
 
     print(selectCountry(browser, "United Kingdom"))
     # browser.quit()
 
 
 def selectCountry(driver, country):
-    assert (driver.find_element_by_css_selector('p.overlay-item-active').text != country), (country + "is already "
-                                                                                                  "selected!")
+    assert (driver.find_element_by_css_selector('p.overlay-item-active').text != country), (country + " is already "
+                                                                                                      "selected!")
 
     list_of_countries = []
     cText = driver.find_elements_by_css_selector("p.overlay-item")
