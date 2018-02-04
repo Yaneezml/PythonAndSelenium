@@ -7,12 +7,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # Runs the code
 def main():
+    """Creates a ChromeDriver, maximises, opens the AM live site then asserts whether the correct page has been
+    called """
     browser = webdriver.Chrome()
     browser.maximize_window()
     browser.get('https://configurator.astonmartin.com/#/')
-
     wait = WebDriverWait(browser, 15)
     assert "astonmartin" in browser.current_url
+    browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
 
     """Closes the 'View Policy' frame"""
     policy = "button[ng-click='closePolicy()']"
@@ -24,7 +26,7 @@ def main():
     print("This is the country selected: " + currentCountry)
     # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
 
-    print(selectCountry(browser, "United Kingdom"))
+    print(selectCountry(browser, "United States"))
 
     browser.implicitly_wait(60)
     # browser.quit()
