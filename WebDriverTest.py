@@ -14,7 +14,11 @@ def main():
     browser.get('https://configurator.astonmartin.com/#/')
     wait = WebDriverWait(browser, 15)
     assert "astonmartin" in browser.current_url
-    browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
+
+    intro = "button[ng-click='configurator.toggleIntro()']"
+    wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, intro)))
+    browser.find_element_by_css_selector(intro).click()
+    # browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
 
     """Closes the 'View Policy' frame"""
     policy = "button[ng-click='closePolicy()']"
