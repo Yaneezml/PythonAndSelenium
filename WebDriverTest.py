@@ -7,12 +7,18 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # Runs the code
 def main():
+    """Creates a ChromeDriver, maximises, opens the AM live site then asserts whether the correct page has been
+    called """
     browser = webdriver.Chrome()
     browser.maximize_window()
     browser.get('https://configurator.astonmartin.com/#/')
-
     wait = WebDriverWait(browser, 15)
     assert "astonmartin" in browser.current_url
+
+    intro = "button[ng-click='configurator.toggleIntro()']"
+    wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, intro)))
+    browser.find_element_by_css_selector(intro).click()
+    # browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
 
     """Closes the 'View Policy' frame"""
     policy = "button[ng-click='closePolicy()']"
@@ -20,6 +26,10 @@ def main():
     browser.find_element_by_css_selector(policy).click()
 
     """Finds current country selected """
+    currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
+    print("This is the country selected: " + currentCountry)
+    # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
+
     print(selectCountry(browser, "United Kingdom"))
 
     browser.implicitly_wait(60)
@@ -29,6 +39,10 @@ def main():
 # Method to select a country by first asserting the country isn't already selected,
 # followed by iterating through all countries to match the parameter.
 def selectCountry(driver, country):
+
+    assert (driver.find_element_by_css_selector('p.overlay-item-active').text != country), (country + " is already "
+                                                                                                      "selected!")
+
     p = driver.find_element_by_css_selector('p.overlay-item-active')
     assert (p.text != country), (country + "is already selected!")
 
