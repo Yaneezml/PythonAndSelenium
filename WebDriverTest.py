@@ -13,9 +13,10 @@ def main():
     browser.maximize_window()
     browser.get('https://configurator.astonmartin.com/#/')
     wait = WebDriverWait(browser, 15)
-    assert "astonmartin" in browser.current_url
+    assert "astonmartin" in browser.current_url, "URL not correct."
 
-    intro = "button[ng-click='configurator.toggleIntro()']"
+    # intro = "button[ng-click='configurator.toggleIntro()']"
+    intro = "button.am-360-toggle-btn"
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, intro)))
     browser.find_element_by_css_selector(intro).click()
     # browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
@@ -32,18 +33,14 @@ def main():
 
     print(selectCountry(browser, "United Kingdom"))
 
-    browser.implicitly_wait(60)
+    print(selectLanguage(browser, "English"))
     # browser.quit()
 
 
 # Method to select a country by first asserting the country isn't already selected,
 # followed by iterating through all countries to match the parameter.
 def selectCountry(driver, country):
-
-    assert (driver.find_element_by_css_selector('p.overlay-item-active').text != country), (country + " is already "
-                                                                                                      "selected!")
-
-    p = driver.find_element_by_css_selector('p.overlay-item-active')
+    p = driver.find_element_by_css_selector("p[ng-click='updateRegion(countryCode)']")
     assert (p.text != country), (country + "is already selected!")
 
     list_of_countries = []
@@ -59,6 +56,11 @@ def selectCountry(driver, country):
             if c.text == country:
                 c.click()
     return "The country {} is now selected.".format(driver.find_element_by_css_selector('p.overlay-item-active').text)
+
+
+def selectLanguage(driver, lang):
+    p = driver.find_element_by_css_selector("p[ng-click='updateLanguage(language.code)']")
+    assert (p.text != lang), (lang + "is already selected!")
 
 
 if __name__ == "__main__":
