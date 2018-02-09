@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 
 # Runs the code
@@ -15,8 +16,8 @@ def main():
     wait = WebDriverWait(browser, 15)
     assert "astonmartin" in browser.current_url, "URL not correct."
 
-    # intro = "button[ng-click='configurator.toggleIntro()']"
-    intro = "button.am-360-toggle-btn"
+    intro = "button[ng-click='configurator.toggleIntro()']"
+    time.sleep(10)
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, intro)))
     browser.find_element_by_css_selector(intro).click()
     # browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
@@ -29,11 +30,10 @@ def main():
     """Finds current country selected """
     currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
     print("This is the country selected: " + currentCountry)
-    # assert (currentCountry == 'United States'), ("Current Selection: " + currentCountry)
 
     print(selectCountry(browser, "United Kingdom"))
 
-    print(selectLanguage(browser, "English"))
+    # print(selectLanguage(browser, "English"))
     # browser.quit()
 
 
