@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 
 
 # Runs the code
@@ -15,9 +14,9 @@ def main():
     browser.get('https://configurator.astonmartin.com/#/')
     wait = WebDriverWait(browser, 15)
     assert "astonmartin" in browser.current_url, "URL not correct."
+    wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, "div.am-full-loader")))
 
     intro = "button[ng-click='configurator.toggleIntro()']"
-    time.sleep(10)
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, intro)))
     browser.find_element_by_css_selector(intro).click()
     # browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
