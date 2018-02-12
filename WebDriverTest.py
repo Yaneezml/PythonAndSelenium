@@ -29,10 +29,9 @@ def main():
     """Finds current country selected """
     currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
     print("This is the country selected: " + currentCountry)
-
     print(selectCountry(browser, "United Kingdom"))
 
-    # print(selectLanguage(browser, "English"))
+    print(selectLanguage(browser, "'Deutsch'"))
     # browser.quit()
 
 
@@ -46,9 +45,9 @@ def selectCountry(driver, country):
     cText = driver.find_elements_by_css_selector("p[ng-click='updateRegion(countryCode)']")
     for i in cText:
         list_of_countries.append(i.text)
-    pprint("These are the country options: " + '\n' + list_of_countries.__str__())
+    country_list = list_of_countries.__str__()
 
-    assert country in list_of_countries, "This country isn't in the list!"
+    assert country in list_of_countries, "This country isn't in the list! Please select one of the following: " + country_list
 
     for c in cText:
         if c.text in list_of_countries:
@@ -59,7 +58,13 @@ def selectCountry(driver, country):
 
 def selectLanguage(driver, lang):
     p = driver.find_element_by_css_selector("p[ng-click='updateLanguage(language.code)']")
-    assert (p.text != lang), (lang + "is already selected!")
+    assert (p.text != lang), (lang + " is already selected!")
+
+    languages = []
+    zz = driver.find_elements_by_css_selector("p[ng-click='updateLanguage(language.code)']")
+    for i in zz:
+        languages.append(i.text)
+    return languages
 
 
 if __name__ == "__main__":
