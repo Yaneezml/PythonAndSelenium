@@ -64,11 +64,14 @@ def selectLanguage(driver, lang):
     language = driver.find_elements_by_css_selector("p[ng-click='updateLanguage(language.code)']")
     for i in language:
         languages.append(i.text)
+        print(i.text)
 
-    for i in languages:
-        if i == lang:
-            i.click()
-    return "Language {} is now selected.".format(i)
+    for i in language:
+        if i in languages:
+            if i == lang:
+                i.click()
+            print("im in here")
+    return "Language {} is now selected.".format(i.text)
 
 
 if __name__ == "__main__":
