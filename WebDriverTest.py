@@ -54,6 +54,7 @@ def selectCountry(driver, country):
             if c.text == country:
                 c.click()
     return "The country {} is now selected.".format(driver.find_element_by_css_selector('p.overlay-item-active').text)
+###
 
 
 def selectLanguage(driver, lang):
