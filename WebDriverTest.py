@@ -19,7 +19,7 @@ def main():
     intro = "button[ng-click='configurator.toggleIntro()']"
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, intro)))
     browser.find_element_by_css_selector(intro).click()
-    # browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
+    # An alternative: browser.find_element_by_css_selector("button[ng-click='configurator.toggleIntro()']").click()
 
     """Closes the 'View Policy' frame"""
     policy = "button[ng-click='closePolicy()']"
@@ -30,6 +30,7 @@ def main():
     currentCountry = browser.find_element_by_css_selector('p.overlay-item-active').text
     print("This is the country selected: " + currentCountry)
     print(selectCountry(browser, "United Kingdom"))
+    print(selectCountry(browser, "Japan"))
 
     print(selectLanguage(browser, "'Deutsch'"))
     # browser.quit()
@@ -54,7 +55,6 @@ def selectCountry(driver, country):
             if c.text == country:
                 c.click()
     return "The country {} is now selected.".format(driver.find_element_by_css_selector('p.overlay-item-active').text)
-###
 
 
 def selectLanguage(driver, lang):
@@ -67,12 +67,14 @@ def selectLanguage(driver, lang):
         languages.append(i.text)
         print(i.text)
 
+    langselected = 'p.overlay-item-active' &
+
     for i in language:
-        if i in languages:
-            if i == lang:
+        if i.text in languages:
+            if i.text == lang:
                 i.click()
             print("im in here")
-    return "Language {} is now selected.".format(i.text)
+    return "Language {} is now selected.".format(driver.find_element_by_css_selector('p.overlay-item-active').text)
 
 
 if __name__ == "__main__":
